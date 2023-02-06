@@ -4,12 +4,14 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && echo example.tld > build/CNAME && touch build/.nojekyll && echo -en '---\npermalink: /404.html\n---' > build/404.md",
+		"build": "vite build && echo m1nx.dev > build/CNAME && touch build/.nojekyll  && echo '---\npermalink: /404.html\n---' > build/404.md",
+		"build:dev": "concurrently -s \"first\" -k \"npm run dev\" \"npm run build\"",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
+		"concurrently": "^7.6.0",
 		"@sveltejs/adapter-static": "^1.0.6",
 		"@sveltejs/kit": "^1.0.0",
 		"svelte": "^3.54.0",
