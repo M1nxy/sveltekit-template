@@ -6,6 +6,7 @@
   <title>
     {greeting}
   </title>
+  <meta name="description" content="Basic demo site for github pages and sveltekit.">
 </svelte:head>
 <main>
   <div class="greeting">
