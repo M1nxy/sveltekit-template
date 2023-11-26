@@ -15,7 +15,7 @@
       <h1>{$page.error ? $page.error.message : "Not Found!"}</h1>
     </div>
   </div>
-  <a href={base}>Return Home!</a>
+  <a href="{base}/">Return Home!</a>
 </main>
 
 <style>
