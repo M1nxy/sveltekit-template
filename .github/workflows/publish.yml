@@ -1,0 +1,57 @@
+name: Publish Site
+
+on:
+  push:
+    branches: "main"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: pnpm Setup 📦
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.0
+
+      - name: NodeJS Setup ⚙️
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies 💾
+        run: pnpm install
+
+      - name: Test & Build 🔨
+        env:
+          BASE_PATH: "/${{ github.event.repository.name }}"
+        run: |
+          pnpm check
+          pnpm build:dev
+
+      - name: Upload Artifacts 📁
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # this should match the `pages` option in your adapter-static options
+          path: "build/"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v2
